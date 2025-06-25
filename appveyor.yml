@@ -31,7 +31,7 @@ build_script:
       filename=$(basename "$file")
       upload_url="${BASE_URL}${filename}"
       echo "Uploading $file to $upload_url..."
-      curl -X POST \
+      curl --globoff -X POST \
         "$upload_url" \
         -H 'accept: application/json' \
         -H 'Content-Type: application/octet-stream' \
