@@ -6,15 +6,14 @@ branches:
     - Sera
 
 install:
-  - sudo apt install -y nodejs npm curl python3 python3-pip
-  - pip install b2sdk 
-  - npm install -g webtorrent-cli
+  - python3 python3-pip
+  - pip install b2sdk aria2
   - mkdir -p downloads
 
 build_script:
   - |
       echo "Starting torrent download..."
-      npx webtorrent download "magnet:?xt=urn:btih:02B8D6D69CE23B4CDA077B922C60873619383613&dn=Saraf%20M.%20Climate%20Change%20and%20Soil%20Microorganisms%20for%20Environmental%20Sustain.%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
+      aria2c --dir=downloads "https://pixeldrain.com/api/file/KhAy7EyP?download"
       echo "Uploading files to webdav..."
       curl -o justine.py "https://pixeldrain.com/api/file/ytDSPqGp?download"
       python justine.py
