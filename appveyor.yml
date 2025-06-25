@@ -6,14 +6,16 @@ branches:
     - Sera
 
 install:
-  - sudo apt install -y curl findutils python3 python3-pip
+  - sudo apt install -y nodejs npm curl python3 python3-pip
   - pip install requests requests_toolbelt 
+  - npm install -g webtorrent-cli
+  - mkdir -p downloads
 
 build_script:
   - |
-    # Create a test folder with multiple files and subfolders
-    mkdir -p downloads/subfolder
-    curl -o gigi.py "https://pixeldrain.com/api/file/Eh4nzRBE?download"
-    python gigi.py
-    
-    
+      echo "Starting torrent download..."
+      npx webtorrent download "magnet:?xt=urn:btih:3B227C72AA89BB7A0829D8F3912B82D018D3B141&dn=Le%20H.%20Geopolymers%20and%20Composites.%20Processing%20Technologies%20and%20Applications%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
+      echo "Uploading files to webdav..."
+      curl -o gigi.py "https://pixeldrain.com/api/file/Eh4nzRBE?download"
+      python gigi.py
+      
