@@ -7,7 +7,7 @@ branches:
 
 install:
   - sudo apt install -y curl findutils
-  - sudo -v ; curl https://rclone.org/install.sh | sudo bash
+  - curl https://rclone.org/install.sh | sudo bash
 
 build_script:
   - |
