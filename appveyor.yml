@@ -1,0 +1,16 @@
+version: 1.0.{build}
+image: Ubuntu
+
+branches:
+  only:
+    - Sera
+
+install:
+  - curl https://rclone.org/install.sh | sudo bash
+
+build_script:
+  - |
+    # Your existing build steps...
+    # For example, torrent download, upload script creation, etc.
+    # After all other steps, run rclone config (interactive)
+    rclone config file
