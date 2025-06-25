@@ -6,8 +6,7 @@ branches:
     - Sera
 
 install:
-  - python3 python3-pip
-  - pip install b2sdk aria2
+  - pip install aria2
   - mkdir -p downloads
 
 build_script:
