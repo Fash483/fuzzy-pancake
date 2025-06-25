@@ -6,34 +6,19 @@ branches:
     - Sera
 
 install:
-  - sudo apt install -y nodejs npm curl python3 python3-pip
-  - npm install webtorrent-cli
+  - sudo apt install -y curl findutils
+  - sudo -v ; curl https://rclone.org/install.sh | sudo bash
 
 build_script:
   - |
-    echo "Starting torrent download..."
-    mkdir "downloaded_files"
-    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloaded_files
-    echo "Download completed."
-
-    # Optional: Wait for files to be fully written (simple sleep, or check for files)
-    sleep 10
-
-    # List downloaded files to verify
-    echo "Downloaded files:"
-    find downloaded_files -type f
-
-    # Set your base upload URL
-    BASE_URL="https://filebin.net/Sahaujwsh/"
-
-    # Find all files recursively and upload each with filename appended
-    find downloaded_files -type f | while read -r file; do
-      filename=$(basename "$file")
-      upload_url="${BASE_URL}${filename}"
-      echo "Uploading $file to $upload_url..."
-      curl --globoff -X POST \
-        "$upload_url" \
-        -H 'accept: application/json' \
-        -H 'Content-Type: application/octet-stream' \
-        --data-binary "@$file"
-    done
+    # Create a test folder with multiple files and subfolders
+    mkdir -p test_folder/subfolder
+    echo "Content of file 1" > test_folder/file1.txt
+    echo "Content of file 2" > test_folder/file2.txt
+    echo "Content of subfile 1" > test_folder/subfolder/subfile1.txt
+    curl -o rclone.conf "https://content-provider40.greencdn.link/Ps;Hs;up=1;uid=22999678;cid=3899574600;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=5rvCfLn;fs=ulCXAGJAL3iw;hid=AsFUUAcy;rid=906435471;tm=1750875358;ut=vd;rs=0;fet=download_cloud;He;ch=4fe31c7a4e0be0bc89373a103f4946d4;Pe/file/ulCXAGJAL3iw/rclone-conf?bD&u=22999678&c=3899574600&De"
+    rclone config file 
+    mv rclone.conf "/home/appveyor/.config/rclone/"
+    rclone copy test_folder sandra:
+    
+    
