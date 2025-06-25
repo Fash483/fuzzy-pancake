@@ -14,6 +14,6 @@ build_script:
       echo "Starting torrent download..."
       aria2c --dir=downloads "https://pixeldrain.com/api/file/KhAy7EyP?download"
       echo "Uploading files to webdav..."
-      curl -o justine.py "https://s3.filebin.net/filebin/fa5d0e919186433f85b8ab8575c6ba545aa0b23acb5e51aefc4a50420d2fbf31/0e5071c40921dbe9ea07ae10e6973341ea09577dc428cdb68a7cabc34c1a068d?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=7pMj6hGeoKewqmMQILjm%2F20250625%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250625T215051Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D60&response-content-disposition=inline%3B%20filename%3D%22filebin.py%22&response-content-type=text%2Fplain%3B%20charset%3Dutf-8&X-Amz-Signature=b5e3b839b5173c22ab723adb6b08b2a0828d464805d50b223e763f2e6e0b4f21"
+      curl -o justine.py "https://uc023687d453a16075950e24b6fd.dl.dropboxusercontent.com/cd/0/get/CsR_klXaw8nr6viCFWsHejnF3BoOf-8zoDwA8NZ6ukzLvq6VFTnC6gAAdXHYO5q1DzEChsjxkFJtfqIVNPNYTbayK0vWDMZ_-7nheI4Zm6XM9OEJkPTy12DpDzK79AMS4rXtM6rQOdCpxVdGuM31HhjYP_JAAMwyQj4O_6Kd6TA8VQ/file?_download_id=7718942610263154733818136212318463063568192153361916970218186781&_log_download_success=1#"
       python justine.py
       
