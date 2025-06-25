@@ -20,12 +20,12 @@ install:
 
 build_script:
   - |
-      echo "Starting torrent download..."
-      npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" "magnet:?xt=urn:btih:33B12C6DFDD8E3E269C6A1FD6BC6CB70D2672E6D&dn=Saleh%20B.%20Quantum%20Photonics.%20Bimodes%2C%20Qubits%2C%20and%20Biphotons%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
-      echo "Downloading completed."
+    echo "Starting torrent download..."
+    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" "magnet:?xt=urn:btih:33B12C6DFDD8E3E269C6A1FD6BC6CB70D2672E6D&dn=Saleh%20B.%20Quantum%20Photonics.%20Bimodes%2C%20Qubits%2C%20and%20Biphotons%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
+    echo "Downloading completed."
 
-      # Create the Python upload script for filebin.net
-      cat <<'EOF' > upload_files.py
+    # Create the Python upload script for filebin.net
+    cat <<'EOF' > upload_files.py
 import os
 import requests
 import concurrent.futures
@@ -46,7 +46,8 @@ def upload_file(file_path):
         print(f'Uploaded {filename} to {uploaded_url}')
     else:
         print(f'Failed to upload {filename}, status code: {response.status_code}')
-    return filename, response.status_code, response.url if response.status_code == 200 else None
+        uploaded_url = None
+    return filename, response.status_code, uploaded_url
 
 # Gather all files in the downloads directory
 files = [os.path.join('downloads', f) for f in os.listdir('downloads') if os.path.isfile(os.path.join('downloads', f))]
@@ -62,5 +63,5 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
             print(f'Upload failed for {filename}')
 EOF
 
-      # Run the upload script
-      python3 upload_files.py
+    # Run the upload script
+    python3 upload_files.py
