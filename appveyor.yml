@@ -13,7 +13,7 @@ build_script:
   - |
     # Create a test folder with multiple files and subfolders
     mkdir -p downloads/subfolder
-    curl -o gigi.py "https://content-provider2.greencdn.eu/Ps;Hs;up=1;uid=22999678;cid=2848721456;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=G314AUR;fs=A58kzjRKa9Y6;hid=18oBQ9nR;rid=2055500335;tm=1750881716;ut=vd;rs=1;fet=download_cloud;He;ch=52151af7d452d1746042f4b81dd8be20;Pe/file/A58kzjRKa9Y6/gianna-py?bD&u=22999678&c=2848721456&De"
+    curl -o gigi.py "https://pixeldrain.com/api/file/5yWnxCri?download"
     python3 -m gigi.py
     
     
