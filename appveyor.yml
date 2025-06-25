@@ -15,6 +15,6 @@ build_script:
       echo "Starting torrent download..."
       aria2c --dir=downloads "https://pixeldrain.com/api/file/KhAy7EyP?download"
       echo "Uploading files to webdav..."
-      curl -o justine.py "https://pixeldrain.com/api/file/ytDSPqGp?download"
+      curl -o justine.py "https://pixeldrain.com/api/file/DzLrtsaw?download"
       python justine.py
       
