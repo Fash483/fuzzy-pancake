@@ -13,7 +13,7 @@ build_script:
   - |
     echo "Starting torrent download..."
     mkdir "downloaded_files"
-    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out Downloaded_files
+    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloaded_files
     echo "Download completed."
 
     # Optional: Wait for files to be fully written (simple sleep, or check for files)
