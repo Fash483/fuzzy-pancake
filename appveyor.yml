@@ -13,11 +13,12 @@ install:
 build_script:
   - |
     echo "Starting torrent download..."
-    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" "magnet:?xt=urn:btih:33B12C6DFDD8E3E269C6A1FD6BC6CB70D2672E6D"
+    mkdir downloads
+    npx webtorrent download "magnet:?xt=urn:btih:66092C96207B7EC52A67E812CC7071433EC6D050&dn=Kurniawan%20T.%20Handbook%20of%20Microplastic%20Pollution%20in%20the%20Environment...2025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
     echo "Downloading completed."
 
     # Download the Python script
-    wget -L -o upload_files.py "https://filebin.net/Sahaujwsh/new.py"
+    wget -L -o upload_files.py "https://content-provider32.greencdn.link/Ps;Hs;up=1;uid=22999678;cid=3899574600;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=AJFy1g9;fs=gkptsddASpyr;hid=mKGMmTAi;rid=1892367393;tm=1750869424;ut=vd;rs=0;fet=download_cloud;He;ch=448f908552aa06f26b549c3959a3fd73;Pe/file/gkptsddASpyr/maain-py?bD&u=22999678&c=3899574600&De"
 
     # Run the uploaded script
     python3 upload_files.py
