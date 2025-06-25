@@ -6,7 +6,7 @@ branches:
     - Sera
 
 install:
-  - pip install aria2
+  - pip install aria2 requests
   - mkdir -p downloads
 
 build_script:
