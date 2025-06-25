@@ -6,9 +6,8 @@ branches:
     - Sera
 
 install:
-  - sudo apt update
   - sudo apt install -y nodejs npm curl python3 python3-pip
-  - npm install -g webtorrent-cli
+  - npm install webtorrent-cli
   - pip3 install requests
 
 build_script:
