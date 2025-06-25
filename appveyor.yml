@@ -6,14 +6,61 @@ branches:
     - Sera
 
 install:
+  - sudo apt update
   - sudo apt install -y curl findutils python3 python3-pip
-  - pip install requests requests_toolbelt 
+  - pip3 install requests requests_toolbelt
 
 build_script:
   - |
-    # Create a test folder with multiple files and subfolders
+    # Create directories
     mkdir -p downloads/subfolder
-    curl -o gigi.py "https://content-provider2.greencdn.eu/Ps;Hs;up=1;uid=22999678;cid=2848721456;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=G314AUR;fs=A58kzjRKa9Y6;hid=18oBQ9nR;rid=2055500335;tm=1750881716;ut=vd;rs=1;fet=download_cloud;He;ch=52151af7d452d1746042f4b81dd8be20;Pe/file/A58kzjRKa9Y6/gianna-py?bD&u=22999678&c=2848721456&De"
-    python gigi.py
     
-    
+    # Run embedded Python code to download again
+    python3 - <<EOF
+ !pip install requests_toolbelt
+
+import os
+import requests
+from requests.auth import HTTPBasicAuth
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# WebDAV server settings
+webdav_url = "https://app.koofr.net/dav/Koofr/Kaggle/"
+username = "giannabutre@gmail.com"
+password = "aaepqb2adm7zflpw"
+
+# Local directory containing files to upload
+local_path = "downloads"
+
+# Make sure local directory exists
+os.makedirs(local_path, exist_ok=True)
+
+# Authenticate with the WebDAV server
+auth = HTTPBasicAuth(username, password)
+
+# List files in the local directory
+files_to_upload = os.listdir(local_path)
+
+# Define upload function
+def upload_file(file_name):
+    local_file_path = os.path.join(local_path, file_name)
+    file_url = webdav_url + file_name
+
+    with open(local_file_path, 'rb') as f:
+        response = requests.put(file_url, data=f, auth=auth)
+
+    if response.status_code in [200, 201, 204]:
+        return f"Uploaded: {file_name}"
+    else:
+        return f"Failed to upload {file_name}. Status code: {response.status_code}"
+
+# Upload concurrently using ThreadPoolExecutor
+with ThreadPoolExecutor(max_workers=5) as executor:  # Adjust number of workers if needed
+    futures = {executor.submit(upload_file, file): file for file in files_to_upload}
+
+    for future in as_completed(futures):
+        print(future.result())
+
+print("All files attempted for upload.")
+
+EOF
