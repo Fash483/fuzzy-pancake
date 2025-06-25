@@ -6,11 +6,7 @@ branches:
     - Sera
 
 environment:
-  # Optional: specify build mode explicitly
-  # To avoid MSBuild notices, set build mode to "script"
-  # (This setting may vary depending on your CI environment version)
-  # For AppVeyor, you can set the build mode in the YAML as follows:
-  # But typically, just defining `build_script` switches to script mode.
+  # Optional environment variables can be added here
 
 install:
   - sudo apt update
@@ -21,19 +17,19 @@ install:
 build_script:
   - |
     echo "Starting torrent download..."
-    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" "magnet:?xt=urn:btih:33B12C6DFDD8E3E269C6A1FD6BC6CB70D2672E6D&dn=Saleh%20B.%20Quantum%20Photonics.%20Bimodes%2C%20Qubits%2C%20and%20Biphotons%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
+    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" "magnet:?xt=urn:btih:33B12C6DFDD8E3E269C6A1FD6BC6CB70D2672E6D"
     echo "Downloading completed."
 
-    # Create the Python upload script for filebin.net
+    # Create the Python upload script
     cat <<'EOF' > upload_files.py
 import os
 import requests
 import concurrent.futures
 
-# Set the directory containing files
+# Directory containing files
 directory = 'downloads'
 
-# The upload URL for filebin.net
+# The URL to upload files to
 upload_url = 'https://filebin.net/'
 
 def upload_file(file_path):
@@ -49,7 +45,7 @@ def upload_file(file_path):
         uploaded_url = None
     return filename, response.status_code, uploaded_url
 
-# Gather all files in the downloads directory
+# List all files in the downloads directory
 files = [os.path.join('downloads', f) for f in os.listdir('downloads') if os.path.isfile(os.path.join('downloads', f))]
 
 # Upload files concurrently
