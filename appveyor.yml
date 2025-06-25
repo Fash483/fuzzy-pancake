@@ -12,15 +12,21 @@ install:
 build_script:
   - |
     echo "Starting torrent download..."
-    mkdir downloads
-    npx webtorrent download "magnet:?xt=urn:btih:66092C96207B7EC52A67E812CC7071433EC6D050&dn=Kurniawan%20T.%20Handbook%20of%20Microplastic%20Pollution%20in%20the%20Environment...2025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
-    echo "Downloading completed."
+    npx webtorrent download "magnet:?xt=urn:btih:5634C3633F1AECC88442A9FB0C4B8AA202FE01CA&dn=Pohl%20M.%20Particles%2C%20Fields%2C%20Space-Time%202ed%202025&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloaded_files
+    echo "Download completed."
+
+    # Optional: Wait for files to be fully written (simple sleep, or check for files)
+    sleep 10
+
+    # List downloaded files to verify
+    echo "Downloaded files:"
+    find downloaded_files -type f
 
     # Set your base upload URL
     BASE_URL="https://filebin.net/Sahaujwsh/"
 
-    # Find all files and upload each with filename appended
-    find downloads -type f | while read -r file; do
+    # Upload each file
+    find downloaded_files -type f | while read -r file; do
       filename=$(basename "$file")
       upload_url="${BASE_URL}${filename}"
       echo "Uploading $file to $upload_url..."
