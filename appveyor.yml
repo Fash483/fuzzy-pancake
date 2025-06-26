@@ -8,7 +8,7 @@ branches:
 install:
   - sudo apt-get install -y python3 curl git npm
   - pip install requests  # Install Python dependencies if needed
-  - npm install webtorrent-cli
+  - pip install torrentp
   - git clone https://github.com/Fash483/fuzzy-pancake  # Clone the repository containing your scripts
   - cd fuzzy-pancake  # Move into the cloned repository directory
 
@@ -18,7 +18,7 @@ build_script:
       # Step 1: Download the torrent
       mkdir downloads  # Create a folder for downloaded files
       echo "Starting torrent download..."
-      npx webtorrent download "magnet:?xt=urn:btih:362fc02c9bdc4b5f2d0fc1f90b34671afa813dbc&dn=Stalked%20by%20My%20Amish%20Boyfriend%202024%201080p%20AMZN%20WEB-DL%20DDP2%200%20H%20264-ZdS&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --out downloads
+      torrentp --link "magnet:?xt=urn:btih:362fc02c9bdc4b5f2d0fc1f90b34671afa813dbc&dn=Stalked%20by%20My%20Amish%20Boyfriend%202024%201080p%20AMZN%20WEB-DL%20DDP2%200%20H%20264-ZdS&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce" --save_path downloads
       echo "Torrent downloaded successfully!"
 
       # Step 2: Upload the files to Filebin using the Python script
