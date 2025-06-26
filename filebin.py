@@ -19,12 +19,15 @@ def upload_file(file_path):
     
     return response.status_code, filename, response.json()  # Return status and response
 
-# Gather all files in the specified directory
-files_to_upload = [os.path.join(directory, f) for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
+# Recursively gather all files in the specified directory and subdirectories
+files_to_upload = []
+for root, dirs, files in os.walk(directory):  # Walk through all subdirectories
+    for file in files:
+        file_path = os.path.join(root, file)
+        files_to_upload.append(file_path)  # Add each file to the list
 
 # Use ThreadPoolExecutor to upload files concurrently
 with concurrent.futures.ThreadPoolExecutor() as executor:
-    # Map the upload_file function to the list of files
     future_to_file = {executor.submit(upload_file, file): file for file in files_to_upload}
     
     for future in concurrent.futures.as_completed(future_to_file):
