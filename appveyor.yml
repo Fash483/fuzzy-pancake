@@ -20,4 +20,4 @@ build_script:
   
   # Now we will run the Python script to upload the files
   - echo "Uploading files to filebin..."
-  - python3 filebin_upload.py  # Run your Python script (adjust if in subfolder)
+  - python3 filebin.py  # Run your Python script (adjust if in subfolder)
