@@ -15,7 +15,7 @@ build_script:
       echo "Nested content." > "downloads/subfolder/NestedFile.txt"
 
       echo "Writing upload script..."
-      cat << 'EOF' > filebin_upload.py
+      cat <<'EOF' > filebin_upload.py
 import os
 import requests
 import concurrent.futures
