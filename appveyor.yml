@@ -8,19 +8,51 @@ branches:
 install:
   - sudo apt-get install -y python3 curl git npm
   - pip install requests  # Install Python dependencies if needed
-  - pip install aria2
   - git clone https://github.com/Fash483/fuzzy-pancake  # Clone the repository containing your scripts
   - cd fuzzy-pancake  # Move into the cloned repository directory
 
 # Script to run for the build
 build_script:
   - |
-      # Step 1: Download the torrent
-      mkdir downloads  # Create a folder for downloaded files
-      echo "Starting torrent download..."
-      aria2c --seed-time=0 --dir=downloads "magnet:?xt=urn:btih:362fc02c9bdc4b5f2d0fc1f90b34671afa813dbc&dn=Stalked%20by%20My%20Amish%20Boyfriend%202024%201080p%20AMZN%20WEB-DL%20DDP2%200%20H%20264-ZdS&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce"
-      echo "Torrent downloaded successfully!"
+      # Install transmission-cli for remote control
+      sudo apt-get install -y transmission-cli transmission-daemon
 
+      # Start transmission-daemon with seed ratio 0 (modify config file as needed)
+      # For example, if you want to run it just for this session:
+      transmission-daemon --config-dir /tmp/transmission-config &
+
+      # Wait for transmission-daemon to initialize
+      sleep 5
+
+      # Add torrent remotely
+      MAGNET_URL="magnet:?xt=urn:btih:362fc02c9bdc4b5f2d0fc1f90b34671afa813dbc&dn=Stalked%20by%20My%20Amish%20Boyfriend%202024%201080p%20AMZN%20WEB-DL%20DDP2%200%20H%20264-ZdS&tr=udp://tracker.bittor.pw:1337/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.dler.org:6969/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://exodus.desync.com:6969/announce&tr=udp://open.demonii.com:1337/announce"
+
+      # Add the torrent
+      transmission-remote --add "$MAGNET_URL"
+
+      # Monitor download progress
+      while true; do
+        # Check if any torrent is still downloading
+        STATUS=$(transmission-remote -l | grep "100%" || true)
+        if [ -n "$STATUS" ]; then
+          echo "Download complete."
+          break
+        else
+          echo "Waiting for download to complete..."
+          sleep 30
+        fi
+      done
+
+      # Remove the torrent to stop seeding
+      TORRENT_ID=$(transmission-remote -l | grep "100%" | awk '{print $1}')
+      transmission-remote --torrent "$TORRENT_ID" --remove-and-delete
+
+      # Stop transmission daemon
+      pkill transmission-daemon
+
+      # Proceed with upload
+      echo "Uploading files to Filebin..."
+      python filebin.py
       # Step 2: Upload the files to Filebin using the Python script
       echo "Uploading files to Filebin..."
       python filebin.py  # Ensure that 'filebin.py' exists and is located in the current directory
