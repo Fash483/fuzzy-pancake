@@ -14,6 +14,7 @@ install:
 build_script:
   - echo "Creating test files..."
   # Create test files directly
+  - mkdir downloads
   - echo "This is a test file for Invader ZIM" > "downloads/Invader ZIM - S00E07 - The Music of Zim (1080p x265 EDGE2020).txt"
   - echo "Another test file for Sjsjsnn [EZTVX.TO]" > "downloads/Sjsjsnn [EZTVX.TO].txt"
   
