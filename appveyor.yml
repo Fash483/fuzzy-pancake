@@ -1,19 +1,61 @@
 version: 1.0.{build}
 image: Ubuntu
 
-branches:
-  only:
-    - Sera
-
 install:
-  - pip install aria2 requests
+  - sudo apt install -y python3 python3-pip
+  - pip install requests
   - mkdir -p downloads
 
 build_script:
   - |
-      echo "Starting torrent download..."
-      aria2c --dir=downloads "https://pixeldrain.com/api/file/KhAy7EyP?download"
-      echo "Uploading files to webdav..."
-      curl -o justine.py "https://uc023687d453a16075950e24b6fd.dl.dropboxusercontent.com/cd/0/get/CsR_klXaw8nr6viCFWsHejnF3BoOf-8zoDwA8NZ6ukzLvq6VFTnC6gAAdXHYO5q1DzEChsjxkFJtfqIVNPNYTbayK0vWDMZ_-7nheI4Zm6XM9OEJkPTy12DpDzK79AMS4rXtM6rQOdCpxVdGuM31HhjYP_JAAMwyQj4O_6Kd6TA8VQ/file?_download_id=7718942610263154733818136212318463063568192153361916970218186781&_log_download_success=1#"
-      python justine.py
-      
+      echo "Creating test files with tricky names..."
+      echo "This is Zim content." > "downloads/Invader ZIM - S00E07 - The Music of Zim (1080p x265 EDGE2020).txt"
+      echo "This is Sjsjsnn." > "downloads/Sjsjsnn [EZTVX.TO].txt"
+      mkdir -p "downloads/subfolder"
+      echo "Nested content." > "downloads/subfolder/NestedFile.txt"
+
+      echo "Writing upload script..."
+      cat << 'EOF' > filebin_upload.py
+import os
+import requests
+import concurrent.futures
+
+directory = 'downloads'
+url_template = 'https://filebin.net/n7ahw0c7muwhwwbx/{filename}'
+
+def upload_file(file_path):
+    filename = os.path.relpath(file_path, directory)  # Preserve subdirectory structure
+    filename = filename.replace(os.sep, '_')  # Flatten path for URL
+    url = url_template.format(filename=filename)
+    
+    with open(file_path, 'rb') as f:
+        response = requests.post(
+            url,
+            headers={
+                'accept': 'application/json',
+                'Content-Type': 'application/octet-stream'
+            },
+            data=f
+        )
+    return response.status_code, filename, response.text
+
+# Recursively gather all files in directory and subdirectories
+files_to_upload = []
+for root, dirs, files in os.walk(directory):
+    for file in files:
+        file_path = os.path.join(root, file)
+        files_to_upload.append(file_path)
+
+# Use ThreadPoolExecutor to upload files concurrently
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    future_to_file = {executor.submit(upload_file, file): file for file in files_to_upload}
+    for future in concurrent.futures.as_completed(future_to_file):
+        try:
+            status_code, filename, response_data = future.result()
+            print(f'File: {filename}, Status Code: {status_code}, Response: {response_data}')
+        except Exception as e:
+            print(f'File: {future_to_file[future]} generated an exception: {e}')
+EOF
+
+      echo "Uploading files..."
+      python3 filebin_upload.py
