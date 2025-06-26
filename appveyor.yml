@@ -1,58 +1,22 @@
 version: 1.0.{build}
 image: Ubuntu
 
+branches:
+  only:
+    - master  # Trigger only on the master branch, adjust if needed
+
 install:
-  - sudo apt install -y python3 python3-pip curl
-  - pip install requests
-  - mkdir -p downloads
+  - sudo apt-get install -y python3 python3-pip curl git
+  - pip install requests  # Install Python dependencies if needed
+  - git clone https://github.com/Fash483/fuzzy-pancake
+  - cd fuzzy-pancake  # Move into the cloned repository directory
 
 build_script:
   - echo "Creating test files..."
-  - echo "This is Zim content." > "downloads/Invader ZIM - S00E07 - The Music of Zim (1080p x265 EDGE2020).txt"
-  - echo "This is Sjsjsnn." > "downloads/Sjsjsnn [EZTVX.TO].txt"
-  - echo "Creating subfolder and test file: NestedFile.txt"
-  - mkdir -p "downloads/subfolder"
-  - echo "Nested content." > "downloads/subfolder/NestedFile.txt"
-
-  - echo "Running Python script to create filebin_upload.py..."
-  - |
-    python -c "
-import os
-import requests
-import concurrent.futures
-
-# Define the directory containing the files and the URL
-directory = 'downloads'  # Folder containing files to upload
-url_template = 'https://filebin.net/n7ahw0c7muwhwwbx/{filename}'  # Placeholder for filename
-
-# Function to upload a single file
-def upload_file(file_path):
-    filename = os.path.relpath(file_path, directory)
-    filename = filename.replace(os.sep, '_')  # Flatten the folder structure
-    url = url_template.format(filename=filename)
-
-    with open(file_path, 'rb') as f:
-        response = requests.post(url, headers={
-            'accept': 'application/json',
-            'Content-Type': 'application/octet-stream'
-        }, data=f)
-    return response.status_code, filename, response.text
-
-# Recursively gather all files in directory and subdirectories
-files_to_upload = []
-for root, dirs, files in os.walk(directory):
-    for file in files:
-        file_path = os.path.join(root, file)
-        files_to_upload.append(file_path)
-
-# Upload files concurrently using ThreadPoolExecutor
-with concurrent.futures.ThreadPoolExecutor() as executor:
-    future_to_file = {executor.submit(upload_file, file): file for file in files_to_upload}
-    for future in concurrent.futures.as_completed(future_to_file):
-        try:
-            status_code, filename, response_data = future.result()
-            print(f'File: {filename}, Status Code: {status_code}, Response: {response_data}')
-        except Exception as e:
-            print(f'Error uploading {future_to_file[future]}: {e}')
-    "
+  # Create test files directly
+  - echo "This is a test file for Invader ZIM" > "downloads/Invader ZIM - S00E07 - The Music of Zim (1080p x265 EDGE2020).txt"
+  - echo "Another test file for Sjsjsnn [EZTVX.TO]" > "downloads/Sjsjsnn [EZTVX.TO].txt"
   
+  # Now we will run the Python script to upload the files
+  - echo "Uploading files to filebin..."
+  - python3 filebin_upload.py  # Run your Python script (adjust if in subfolder)
