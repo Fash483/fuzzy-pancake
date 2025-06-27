@@ -6,12 +6,14 @@ branches:
     - Sera
 
 install:
+  - sudo apt install -y nodejs npm curl
+  - npm install webtorrent-cli
   - mkdir -p downloads
 
 build_script:
   - |
       echo "Starting torrent download..."
-      wget -P downloads --content-disposition "https://archive.org/compress/torrent-downloaded-from-demonoid.com_202402/formats=H.264&file=/torrent-downloaded-from-demonoid.com_202402.zip"
+      npx webtorrent download "magnet:?xt=urn:btih:9bc5b04e3e135b2f1261dc2d3920aeb8519991b4&dn=Megalodon.The.Frenzy.2023.BLURAY.720p.BluRay.x264.AAC-%5BYTS.MX%5D.mp4&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce" --out downloads
       echo "Uploading files to Pixeldrain..."
 
       find downloads -type f | while read file; do
