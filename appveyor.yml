@@ -7,17 +7,18 @@ branches:
 
 install:
   - sudo apt install -y nodejs npm curl
-  - npm install torrent-dl
+  - apt update
+  - apt install aria2
   - mkdir -p downloads
   - cd downloads
 
 build_script:
   - |
       echo "Starting torrent download..."
-      npx torrent-dl -i "magnet:?xt=urn:btih:612A7F4F112B919CEDB99B3AF0879F59E6B9C021&dn=Squid.Game.S03.1080p.NF.WEB-DL.DUAL.DDP5.1.Atmos.H.265-Spidey%20%20%20%20%20%20%20%20&tr=udp://tracker.bittor.pw:1337/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.opentrackr.org:1337/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.dler.org:6969/announce%20%20%20%20%20%20%20%20&tr=udp://open.stealth.si:80/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.torrent.eu.org:451/announce%20%20%20%20%20%20%20%20&tr=udp://exodus.desync.com:6969/announce%20%20%20%20%20%20%20%20&tr=udp://open.demonii.com:1337/announce"
+      aria2c --seed-time=0 --dir=downloads "magnet:?xt=urn:btih:8be57821c162e501d9cf7f66a5ab21492487fe06&dn=Arthur%201996%20Seasons%2021%20to%2025%20Complete%20%2B%20Specials%20TVRip%20x264%20%5Bi_c%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.theoks.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker-udp.gbitt.info%3A80%2Fannounce&tr=udp%3A%2F%2Fwepzone.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fttk2.nbaonlineservice.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker2.dler.org%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.tryhackx.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.therarbg.to%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.srv00.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.ololosh.space%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dump.cl%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.darkness.services%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.bittor.pw%3A1337%2Fannounce&tr=udp%3A%2F%2Ftr4ck3r.duckdns.org%3A6969%2Fannounce&tr=https%3A%2F%2Ftracker.bt4g.com%3A443%2Fannounce"
       echo "Uploading files to Pixeldrain..."
 
       find Squid* -type f | while read file; do
         echo "Uploading $file..."
-        curl -T "$file" -u :876e1688-ae8f-4f30-85ce-42a7749802d9 https://pixeldrain.com/api/file/
+        curl -T "$file" -u :87c2dcc7-5488-46ac-974b-491b939c284d https://pixeldrain.com/api/file/
       done
