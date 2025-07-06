@@ -7,8 +7,7 @@ branches:
 
 install:
   - sudo apt install -y nodejs npm curl
-  - apt update
-  - apt install aria2
+  - sudo apt install aria2 -y
   - mkdir -p downloads
   - cd downloads
 
