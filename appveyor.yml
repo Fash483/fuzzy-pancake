@@ -7,13 +7,13 @@ branches:
 
 install:
   - sudo apt install -y nodejs npm curl
-  - sudo apt install aria2 -y
+  - npm install -g webtorrent-cli
   - mkdir -p downloads
   - git clone https://github.com/Fash483/fuzzy-pancake.git
 
 build_script:
   - |
       echo "Starting torrent download..."
-      aria2c --seed-time=0 --dir=downloads "magnet:?xt=urn:btih:a7b1eb0602882c600d928c36447409d37f920ab1&dn=Crime+Scene+Investigators+S01E12+H+for+the+Holidays+1080p+CRAV+WEB-DL+DDP5+1+H+264-Kitsune%20%20%20%20%20%20%20%20&tr=udp://tracker.bittor.pw:1337/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.opentrackr.org:1337/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.dler.org:6969/announce%20%20%20%20%20%20%20%20&tr=udp://open.stealth.si:80/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.torrent.eu.org:451/announce%20%20%20%20%20%20%20%20&tr=udp://exodus.desync.com:6969/announce%20%20%20%20%20%20%20%20&tr=udp://open.demonii.com:1337/announce"
+      npx webtorrent download "magnet:?xt=urn:btih:a7b1eb0602882c600d928c36447409d37f920ab1&dn=Crime+Scene+Investigators+S01E12+H+for+the+Holidays+1080p+CRAV+WEB-DL+DDP5+1+H+264-Kitsune%20%20%20%20%20%20%20%20&tr=udp://tracker.bittor.pw:1337/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.opentrackr.org:1337/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.dler.org:6969/announce%20%20%20%20%20%20%20%20&tr=udp://open.stealth.si:80/announce%20%20%20%20%20%20%20%20&tr=udp://tracker.torrent.eu.org:451/announce%20%20%20%20%20%20%20%20&tr=udp://exodus.desync.com:6969/announce%20%20%20%20%20%20%20%20&tr=udp://open.demonii.com:1337/announce" --out downloads
       echo "Uploading files to filebin..."
       python fuzzy-pancake/filebin.py
